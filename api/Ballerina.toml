@@ -1,0 +1,8 @@
+[package]
+org = "avinyafoundation"
+name = "campus_config_bff"
+version = "0.1.0"
+distribution = "2201.2.3"
+
+[build-options]
+observabilityIncluded = true
