@@ -1,0 +1,11 @@
+query getAvinyaTypes {
+    avinya_types {
+        id
+        active
+        name
+        global_type
+        foundation_type
+        focus
+        level
+    }
+}
