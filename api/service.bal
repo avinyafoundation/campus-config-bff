@@ -52,4 +52,40 @@ service / on new http:Listener(9090) {
                 ":: Detail: " + getAvinyaTypesResponse.detail().toString());
         }
     }
+
+    resource function post avinya_types (@http:Payload AvinyaType avinyaType) returns AvinyaType|error {
+        CreateAvinyaTypeResponse|graphql:ClientError createAvinyaTypeResponse = globalDataClient->createAvinyaType(avinyaType);
+        if(createAvinyaTypeResponse is CreateAvinyaTypeResponse) {
+            AvinyaType|error avinya_type_record = createAvinyaTypeResponse.add_avinya_type.cloneWithType(AvinyaType);
+            if(avinya_type_record is AvinyaType) {
+                return avinya_type_record;
+            } else {
+                log:printError("Error while processing Application record received", avinya_type_record);
+                return error("Error while processing Application record received: " + avinya_type_record.message() + 
+                    ":: Detail: " + avinya_type_record.detail().toString());
+            }
+        } else {
+            log:printError("Error while creating application", createAvinyaTypeResponse);
+            return error("Error while creating application: " + createAvinyaTypeResponse.message() + 
+                ":: Detail: " + createAvinyaTypeResponse.detail().toString());
+        }
+    }
+
+    resource function put avinya_types (@http:Payload AvinyaType avinyaType) returns AvinyaType|error {
+        UpdateAvinyaTypeResponse|graphql:ClientError updateAvinyaTypeResponse = globalDataClient->updateAvinyaType(avinyaType);
+        if(updateAvinyaTypeResponse is UpdateAvinyaTypeResponse) {
+            AvinyaType|error avinya_type_record = updateAvinyaTypeResponse.update_avinya_type.cloneWithType(AvinyaType);
+            if(avinya_type_record is AvinyaType) {
+                return avinya_type_record;
+            } else {
+                log:printError("Error while processing Application record received", avinya_type_record);
+                return error("Error while processing Application record received: " + avinya_type_record.message() + 
+                    ":: Detail: " + avinya_type_record.detail().toString());
+            }
+        } else {
+            log:printError("Error while creating application", updateAvinyaTypeResponse);
+            return error("Error while creating application: " + updateAvinyaTypeResponse.message() + 
+                ":: Detail: " + updateAvinyaTypeResponse.detail().toString());
+        }
+    }
 }

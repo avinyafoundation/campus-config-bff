@@ -9,3 +9,29 @@ query getAvinyaTypes {
         level
     }
 }
+
+ mutation createAvinyaType($avinyaType: AvinyaType!)
+  {
+      add_avinya_type(avinya_type:$avinyaType){
+        id
+        active
+        name
+        global_type
+        foundation_type
+        focus
+        level
+    }
+  }
+
+ mutation updateAvinyaType($avinyaType: AvinyaType!)
+  {
+      update_avinya_type(avinya_type:$avinyaType){
+        id
+        active
+        name
+        global_type
+        foundation_type
+        focus
+        level
+    }
+  }

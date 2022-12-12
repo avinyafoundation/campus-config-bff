@@ -49,6 +49,18 @@ public type Application record {
     int? person_id?;
 };
 
+public type AvinyaType record {
+    int? level?;
+    string? name?;
+    boolean active?;
+    string? description?;
+    string? foundation_type?;
+    string? focus?;
+    int? id?;
+    string? record_type?;
+    string global_type?;
+};
+
 public type Evaluation record {
     int[]? parent_evaluations?;
     int? activity_instance_id?;
@@ -80,25 +92,29 @@ public type Organization record {
 public type Person record {
     int? permanent_address_id?;
     string? notes?;
+    int[]? parent_student?;
     string? date_of_birth?;
-    string? sex?;
     int? avinya_type_id?;
-    string? passport_no?;
     Address? permanent_address?;
-    string? record_type?;
     int? mailing_address_id?;
+    string? id_no?;
+    string? jwt_email?;
+    int? id?;
+    string? email?;
+    string? created?;
+    string? sex?;
+    string? passport_no?;
+    string? record_type?;
     Address? mailing_address?;
+    int[]? child_student?;
     string? full_name?;
     string? nic_no?;
-    string? id_no?;
     int? phone?;
-    string? jwt_email?;
     int? organization_id?;
-    int? id?;
     string? asgardeo_id?;
+    string? updated?;
     string? preferred_name?;
     string? jwt_sub_id?;
-    string? email?;
 };
 
 public type Prospect record {
@@ -122,16 +138,6 @@ public type Prospect record {
     string? email?;
 };
 
-public type AvinyaType record{|
-    int id?;
-    boolean active?;
-    string global_type?;
-    string? name?;
-    string? foundation_type?;
-    string? focus?;
-    int? level?;
-|};
-
 public type GetAvinyaTypesResponse record {|
     map<json?> __extensions?;
     record {|
@@ -143,4 +149,30 @@ public type GetAvinyaTypesResponse record {|
         string? focus;
         int? level;
     |}[] avinya_types;
+|};
+
+public type CreateAvinyaTypeResponse record {|
+    map<json?> __extensions?;
+    record {|
+        int? id;
+        boolean active;
+        string? name;
+        string global_type;
+        string? foundation_type;
+        string? focus;
+        int? level;
+    |}? add_avinya_type;
+|};
+
+public type UpdateAvinyaTypeResponse record {|
+    map<json?> __extensions?;
+    record {|
+        int? id;
+        boolean active;
+        string? name;
+        string global_type;
+        string? foundation_type;
+        string? focus;
+        int? level;
+    |}? update_avinya_type;
 |};
