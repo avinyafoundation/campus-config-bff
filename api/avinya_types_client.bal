@@ -1,7 +1,7 @@
 import ballerina/http;
 import ballerina/graphql;
 
-public isolated client class Avinya_typesClient {
+public isolated client class GlobalDataClient {
     final graphql:Client graphqlClient;
     public isolated function init(string serviceUrl, http:ClientConfiguration clientConfig = {}) returns graphql:ClientError? {
         graphql:Client clientEp = check new (serviceUrl, clientConfig);

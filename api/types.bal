@@ -122,6 +122,16 @@ public type Prospect record {
     string? email?;
 };
 
+public type AvinyaType record{|
+    int id?;
+    boolean active?;
+    string global_type?;
+    string? name?;
+    string? foundation_type?;
+    string? focus?;
+    int? level?;
+|};
+
 public type GetAvinyaTypesResponse record {|
     map<json?> __extensions?;
     record {|

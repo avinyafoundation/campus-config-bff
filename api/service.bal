@@ -1,4 +1,18 @@
 import ballerina/http;
+import ballerina/graphql;
+import ballerina/log;
+
+
+final GlobalDataClient globalDataClient = check new (GLOBAL_DATA_API_URL
+    // clientConfig =
+    //  {
+    //     auth : {
+    //         tokenUrl: CHOREO_TOKEN_URL,
+    //         clientId:GLOBAL_DATA_CLIENT_ID,
+    //         clientSecret:GLOBAL_DATA_CLIENT_SECRET
+    //     }
+    // }
+);
 
 # A service representing a network-accessible API
 # bound to port `9090`.
@@ -13,5 +27,29 @@ service / on new http:Listener(9090) {
             return error("name should not be empty!");
         }
         return "Hello, " + name;
+    }
+
+    resource function get avinya_types() returns AvinyaType[]|error {
+        GetAvinyaTypesResponse|graphql:ClientError getAvinyaTypesResponse = globalDataClient->getAvinyaTypes();
+        if(getAvinyaTypesResponse is GetAvinyaTypesResponse) {
+            AvinyaType[] avinyaTypes = [];
+            foreach var avinya_type in getAvinyaTypesResponse.avinya_types {
+                AvinyaType|error avinyaType = avinya_type.cloneWithType(AvinyaType);
+                if(avinyaType is AvinyaType) {
+                    avinyaTypes.push(avinyaType);
+                } else {
+                    log:printError("Error while processing Application record received", avinyaType);
+                    return error("Error while processing Application record received: " + avinyaType.message() + 
+                        ":: Detail: " + avinyaType.detail().toString());
+                }
+            }
+
+            return avinyaTypes;
+            
+        } else {
+            log:printError("Error while getting application", getAvinyaTypesResponse);
+            return error("Error while getting application: " + getAvinyaTypesResponse.message() + 
+                ":: Detail: " + getAvinyaTypesResponse.detail().toString());
+        }
     }
 }
