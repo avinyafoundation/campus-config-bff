@@ -148,6 +148,7 @@ public type GetAvinyaTypesResponse record {|
         string? foundation_type;
         string? focus;
         int? level;
+        string? description;
     |}[] avinya_types;
 |};
 
@@ -161,6 +162,7 @@ public type CreateAvinyaTypeResponse record {|
         string? foundation_type;
         string? focus;
         int? level;
+        string? description;
     |}? add_avinya_type;
 |};
 
@@ -174,5 +176,6 @@ public type UpdateAvinyaTypeResponse record {|
         string? foundation_type;
         string? focus;
         int? level;
+        string? description;
     |}? update_avinya_type;
 |};

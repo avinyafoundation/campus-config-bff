@@ -4,6 +4,20 @@ import ballerina/log;
 
 
 final GlobalDataClient globalDataClient = check new (GLOBAL_DATA_API_URL
+    // make client config a configurale 
+    // if use auth then define client config as below 
+    // set use auth default to true
+
+    // if (GLOBAL_DATA_USE_AUTH) {
+    //     auth : {
+    //         tokenUrl: CHOREO_TOKEN_URL,
+    //         clientId:GLOBAL_DATA_CLIENT_ID,
+    //         clientSecret:GLOBAL_DATA_CLIENT_SECRET
+    //     }
+    // } else {
+    //     auth : {}
+    // }
+
     // clientConfig =
     //  {
     //     auth : {
@@ -16,6 +30,11 @@ final GlobalDataClient globalDataClient = check new (GLOBAL_DATA_API_URL
 
 # A service representing a network-accessible API
 # bound to port `9090`.
+@http:ServiceConfig {
+    cors: {
+        allowOrigins: ["*"]
+    }
+}
 service / on new http:Listener(9090) {
 
     # A resource for generating greetings
