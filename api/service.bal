@@ -3,29 +3,23 @@ import ballerina/graphql;
 import ballerina/log;
 
 
-final GlobalDataClient globalDataClient = check new (GLOBAL_DATA_API_URL
-    // make client config a configurale 
-    // if use auth then define client config as below 
-    // set use auth default to true
+public function initClientConfig() returns http:ClientConfiguration{
+    http:ClientConfiguration _clientConig;
+    if (GLOBAL_DATA_USE_AUTH) {
+        _clientConig = { auth : {
+            tokenUrl: CHOREO_TOKEN_URL,
+            clientId:GLOBAL_DATA_CLIENT_ID,
+            clientSecret:GLOBAL_DATA_CLIENT_SECRET
+        } };
+    } else { 
+        _clientConig = {auth : {}};
+    }
+    return _clientConig;
+}
 
-    // if (GLOBAL_DATA_USE_AUTH) {
-    //     auth : {
-    //         tokenUrl: CHOREO_TOKEN_URL,
-    //         clientId:GLOBAL_DATA_CLIENT_ID,
-    //         clientSecret:GLOBAL_DATA_CLIENT_SECRET
-    //     }
-    // } else {
-    //     auth : {}
-    // }
 
-    // clientConfig =
-    //  {
-    //     auth : {
-    //         tokenUrl: CHOREO_TOKEN_URL,
-    //         clientId:GLOBAL_DATA_CLIENT_ID,
-    //         clientSecret:GLOBAL_DATA_CLIENT_SECRET
-    //     }
-    // }
+final GlobalDataClient globalDataClient = check new (GLOBAL_DATA_API_URL,
+    clientConfig = initClientConfig()
 );
 
 # A service representing a network-accessible API
